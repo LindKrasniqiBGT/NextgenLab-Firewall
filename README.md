@@ -19,4 +19,6 @@ Erion Azemi
 
 Trello:
 
+https://trello.com/invite/b/6980eb4921ed36629cb5ac5a/ATTI2402eb5ea4f9f14ce51efd8c909ca624B0269E44/firewalls-retake
+
 Figma Wireframe:
