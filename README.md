@@ -12,6 +12,8 @@ Erion Azemi
 Orik Hasaj
 Alp Abazi
 
+# Links
+
 Trello:
 
 Figma Wireframe:
