@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NetGuard | Policy Manager</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="app-wrapper">
+        <header class="main-header">
+            <div class="title-group">
+                <h1>Firewall Policy Lab</h1>
+                <p>Status: <span class="status-indicator">Active</span> <code>edge-gw-01</code></p>
+            </div>
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-switch" title="Toggle Dark Mode">
+                    <i data-lucide="sun"></i>
+                </button>
+                <button class="btn btn-primary" onclick="ui.openModal()">
+                    <i data-lucide="plus"></i> Add Rule
+                </button>
+            </div>
+        </header>
+
+        <div class="dashboard-grid">
+            <div class="card chart-box">
+                <label class="section-label">Traffic Distribution</label>
+                <div class="canvas-container">
+                    <canvas id="trafficChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="stats-group">
+                <div class="card stat-card">
+                    <label class="section-label">Allowed</label>
+                    <div class="value success" id="count-allow">0</div>
+                </div>
+                <div class="card stat-card">
+                    <label class="section-label">Blocked</label>
+                    <div class="value danger" id="count-deny">0</div>
+                </div>
+            </div>
+        </div>
+
+        <section class="policy-container">
+            <div class="table-controls">
+                <h2>Active Ruleset</h2>
+                <small>First-match logic applies. Drag to reorder.</small>
+            </div>
+
+            <div class="rule-table">
+                <div class="row head">
+                    <div class="cell drag"></div>
+                    <div class="cell id">#</div>
+                    <div class="cell">Source</div>
+                    <div class="cell">Destination</div>
+                    <div class="cell port">Port</div>
+                    <div class="cell action">Action</div>
+                    <div class="cell manage"></div>
+                </div>
+                
+                <div id="rule-list-body"></div>
+
+                <div class="row implicit-deny">
+                    <div class="cell drag"></div>
+                    <div class="cell id">∞</div>
+                    <div class="cell">0.0.0.0/0</div>
+                    <div class="cell">0.0.0.0/0</div>
+                    <div class="cell port">Any</div>
+                    <div class="cell action"><span class="tag deny">DENY</span></div>
+                    <div class="cell manage">Default</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="modal-overlay" id="ruleModal">
+        <div class="modal-body">
+            <h3 id="modalTitle">Rule Configuration</h3>
+            <form id="policyForm">
+                <input type="hidden" id="editIndex">
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label>Source IP/CIDR</label>
+                        <input type="text" id="inp-src" placeholder="192.168.1.0/24" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Destination IP/CIDR</label>
+                        <input type="text" id="inp-dst" placeholder="10.0.0.1" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Port / Range</label>
+                        <input type="text" id="inp-port" placeholder="80, 443" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Action</label>
+                        <select id="inp-action">
+                            <option value="Allow">Allow</option>
+                            <option value="Deny">Deny</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-footer">
+                    <button type="button" class="btn-text" onclick="ui.closeModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
